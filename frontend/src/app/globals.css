@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+:root {
+  --red: #E8192C;
+  --red-light: #ff4d5e;
+  --red-dark: #c0141f;
+  --navy: #1e2d3d;
+  --navy-2: #253648;
+  --navy-3: #2d4057;
+  --dark: #0a0a0f;
+  --dark-2: #0f1520;
+  --dark-3: #162030;
+  --gray: #1e2d3d;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0a0a0f;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f1520;
+}
+::-webkit-scrollbar-thumb {
+  background: #E8192C;
+  border-radius: 3px;
+}
+
+/* Red gradient text */
+.brand-text {
+  background: linear-gradient(135deg, #E8192C, #ff4d5e, #E8192C);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.navy-text {
+  color: #1e2d3d;
+}
+
+/* Red button */
+.btn-red {
+  background: linear-gradient(135deg, #E8192C, #ff4d5e);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 12px 32px;
+  border-radius: 4px;
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-red:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(232, 25, 44, 0.45);
+}
+
+/* Keep btn-gold as alias for compatibility */
+.btn-gold {
+  background: linear-gradient(135deg, #E8192C, #ff4d5e);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 12px 32px;
+  border-radius: 4px;
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(232, 25, 44, 0.45);
+}
+
+/* Card hover */
+.car-card {
+  background: #0f1520;
+  border: 1px solid #1e2d3d;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.car-card:hover {
+  border-color: #E8192C;
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(232, 25, 44, 0.18);
+}
+
+/* Section padding */
+.section-padding {
+  padding: 80px 0;
+}
+
+/* Loading spinner */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #1e2d3d;
+  border-top: 4px solid #E8192C;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Fade in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Overlay */
+.overlay {
+  background: linear-gradient(to right, rgba(0,0,0,0.92), rgba(0,0,0,0.3));
+}
+
+/* Logo text styling to match brand */
+.logo-johad {
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.logo-wheels {
+  color: #E8192C;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+/* Navy badge / tag */
+.navy-badge {
+  background-color: #1e2d3d;
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Red glow */
+.red-glow {
+  box-shadow: 0 0 30px rgba(232, 25, 44, 0.25);
+}
