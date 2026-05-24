@@ -144,14 +144,14 @@ export default function ContactPage() {
                 {
                   icon: <Phone className="text-yellow-400" size={22} />,
                   title: 'Phone',
-                  content: ['071 629 6585', '079 723 0565', '079 142 4616'],
+                  content: ['0716 296 585', '0797 230 565', '079 142 4616'],
                   links: ['tel:0716296585', 'tel:0797230565', 'tel:0791424616'],
                 },
                 {
                   icon: <Mail className="text-yellow-400" size={22} />,
                   title: 'Email',
-                  content: ['joshmark.ke254@gmail.com'],
-                  links: ['mailto:joshmark.ke254@gmail.com'],
+                  content: ['Johadwheels.co.ke'],
+                  links: ['mailto:Johadwheels.co.ke'],
                 },
                 {
                   icon: <Clock className="text-yellow-400" size={22} />,

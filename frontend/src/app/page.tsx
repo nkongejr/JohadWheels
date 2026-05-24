@@ -888,10 +888,10 @@ export default function HomePage() {
                     <div>
                       <div className="text-white font-medium text-sm">Email</div>
                       <a
-                        href="mailto:joshmark.ke254@gmail.com"
+                        href="mailto:Johadwheels.co.ke"
                         className="text-gray-400 text-sm hover:text-red-400 transition-colors"
                       >
-                        joshmark.ke254@gmail.com
+                        Johadwheels.co.ke
                       </a>
                     </div>
                   </div>
