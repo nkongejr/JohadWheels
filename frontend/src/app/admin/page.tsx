@@ -285,7 +285,7 @@ export default function AdminLoginPage() {
           </div>
 
           {/* Setup */}
-          <button
+          {/* <button
             onClick={handleSetupAdmin}
             className="w-full py-3 rounded-xl font-semibold text-sm transition-all duration-200"
             style={{
@@ -301,7 +301,7 @@ export default function AdminLoginPage() {
             }}
           >
             Setup Admin Accounts
-          </button>
+          </button> */}
         </div>
 
         <p
