@@ -646,10 +646,10 @@ export default function HomePage() {
             <div className="relative">
              <div className="relative h-[450px] rounded-2xl overflow-hidden">
   <Image
-    src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800"
+    src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800"
     alt="Toyota Land Cruiser Prado TX"
     fill
-    className="object-cover"
+    className="object-cover object-center"
   />
   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
 </div>
