@@ -930,7 +930,7 @@ export default function HomePage() {
                   </a>
 
                   <a
-                    href="https://facebook.com"
+                    href="https://www.facebook.com/profile.php?id=61590238221238"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 p-3 rounded-lg transition-colors"
@@ -952,7 +952,7 @@ export default function HomePage() {
                   </a>
 
                   <a
-                    href="https://tiktok.com"
+                    href="https://www.tiktok.com/@johadwheels?fbclid=IwY2xjawR3s7hleHRuA2FlbQIxMQBzcnRjBmFwcF9pZAwzNTA2ODU1MzE3MjgAAR6c4sQvjnlU9W27V__3TlsVSHBfnDvdjAvAHH-knsb6gJKo_6gtTTK48idp9Q_aem_LOxv7C_0MZ3mR_j-4pb-1g"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 p-3 rounded-lg transition-colors"

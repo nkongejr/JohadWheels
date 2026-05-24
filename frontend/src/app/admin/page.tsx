@@ -206,7 +206,7 @@ export default function AdminLoginPage() {
               </div>
             </div>
 
-            {/* Admin hint box */}
+            {/* Admin hint box
             <div
               className="rounded-xl p-3 text-xs space-y-1"
               style={{
@@ -240,7 +240,7 @@ export default function AdminLoginPage() {
                   </button>
                 </div>
               ))}
-            </div>
+            </div> */}
 
             {/* Submit */}
             <button
