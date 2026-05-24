@@ -388,13 +388,20 @@ export default function HomePage() {
                   border: '3px solid rgba(232,25,44,0.15)',
                 }}
               >
-                <Image
+                {/* <Image
                   src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1200&q=80"
                   alt="Luxury Car"
                   fill
                   className="object-cover"
                   priority
-                />
+                /> */}
+                <Image
+    src="/images/tx.jpeg"
+    alt="Prado TX"
+    fill
+    className="object-cover object-center"
+    priority
+  />
                 {/* Subtle overlay */}
                 <div
                   className="absolute inset-0"
@@ -486,13 +493,19 @@ export default function HomePage() {
         {/* ── Mobile hero image (shows below text on small screens) ── */}
         <div className="lg:hidden w-full mt-8 px-4 pb-8 relative z-10">
           <div className="relative h-56 rounded-2xl overflow-hidden shadow-xl">
-            <Image
+            {/* <Image
               src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80"
               alt="Luxury Car"
               fill
               className="object-cover"
               priority
-            />
+            /> */}
+            <Image
+    src="/images/tx.jpeg"
+    alt="Prado TX"
+    fill
+    className="object-cover object-center"
+  />
             <div
               className="absolute inset-0"
               style={{
@@ -646,8 +659,8 @@ export default function HomePage() {
             <div className="relative">
              <div className="relative h-[450px] rounded-2xl overflow-hidden">
   <Image
-    src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800"
-    alt="Toyota Land Cruiser Prado TX"
+    src="/images/about.jpeg"
+    alt="Toyota Fielder"
     fill
     className="object-cover object-center"
   />
