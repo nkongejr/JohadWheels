@@ -644,15 +644,15 @@ export default function HomePage() {
 
             {/* Image */}
             <div className="relative">
-              <div className="relative h-[450px] rounded-2xl overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800"
-                  alt="About JOHAD WHEELS"
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              </div>
+             <div className="relative h-[450px] rounded-2xl overflow-hidden">
+  <Image
+    src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800"
+    alt="Toyota Land Cruiser Prado TX"
+    fill
+    className="object-cover"
+  />
+  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+</div>
               {/* Floating badge */}
               <div
                 className="absolute -bottom-6 -left-6 p-5 rounded-xl shadow-2xl"
