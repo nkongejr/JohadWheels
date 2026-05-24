@@ -48,7 +48,7 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between text-xs text-white font-medium">
           <span className="flex items-center gap-1">
-            <span>📍</span>
+            
             Karatina, Kenya
           </span>
           <div className="flex items-center gap-4">
