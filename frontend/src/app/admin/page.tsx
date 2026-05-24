@@ -276,13 +276,13 @@ export default function AdminLoginPage() {
           </form>
 
           {/* Divider */}
-          <div className="flex items-center gap-3 my-5">
+          {/* <div className="flex items-center gap-3 my-5">
             <div className="flex-1 h-px" style={{ background: '#1e2d3d' }} />
             <span className="text-xs" style={{ color: '#4b5563' }}>
               First time setup?
             </span>
             <div className="flex-1 h-px" style={{ background: '#1e2d3d' }} />
-          </div>
+          </div> */}
 
           {/* Setup */}
           {/* <button
