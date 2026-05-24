@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { authApi } from '@/lib/api';
 import toast from 'react-hot-toast';
-import { Lock, Mail, Eye, EyeOff } from 'lucide-react';
+import { Lock, User, Eye, EyeOff } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ email: '', password: '' });
+  const [form, setForm] = useState({ username: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [showPass, setShowPass] = useState(false);
 
@@ -31,17 +31,23 @@ export default function AdminLoginPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await authApi.login(form);
+      // Send username for login
+      const res = await authApi.login({
+        username: form.username.toLowerCase().trim(),
+        password: form.password,
+      });
+
       if (res.data.user.role !== 'admin') {
         toast.error('Admin access required');
         return;
       }
+
       localStorage.setItem('johad_token', res.data.token);
       localStorage.setItem('johad_user', JSON.stringify(res.data.user));
-      toast.success('Welcome back, Admin!');
+      toast.success(`Welcome back, ${res.data.user.name}!`);
       router.push('/admin/dashboard');
     } catch (err: any) {
-      toast.error(err?.response?.data?.message || 'Login failed');
+      toast.error(err?.response?.data?.message || 'Invalid credentials');
     } finally {
       setLoading(false);
     }
@@ -49,10 +55,15 @@ export default function AdminLoginPage() {
 
   const handleSetupAdmin = async () => {
     try {
-      await authApi.setupAdmin();
-      toast.success('Admin created! Email: admin@johadwheels.com | Pass: Admin@2024');
+      const res = await authApi.setupAdmin();
+      toast.success('Admin accounts created! Check console for details.');
+      console.table([
+        { Name: 'Harrison Muriithi', Username: 'harrison', Password: 'Admin@2026' },
+        { Name: 'Dishon Mwathi',     Username: 'dishon',   Password: 'Admin@2026' },
+        { Name: 'Joshmark Kivuma',   Username: 'joshmark', Password: 'Admin@2026' },
+      ]);
     } catch {
-      toast.error('Setup failed or admin already exists');
+      toast.error('Setup failed or admins already exist');
     }
   };
 
@@ -104,35 +115,42 @@ export default function AdminLoginPage() {
           }}
         >
           <h2 className="text-xl font-black text-white mb-1 text-center">
-            Sign In
+            Admin Sign In
           </h2>
           <p className="text-gray-500 text-sm text-center mb-6">
-            Access your admin dashboard
+            Use your username and password
           </p>
 
           <form onSubmit={handleLogin} className="space-y-4">
-            {/* Email */}
+            {/* Username */}
             <div>
-              <label className="block text-sm font-medium mb-1.5" style={{ color: '#9ca3af' }}>
-                Email Address
+              <label
+                className="block text-sm font-medium mb-1.5"
+                style={{ color: '#9ca3af' }}
+              >
+                Username
               </label>
               <div className="relative">
-                <Mail
+                <User
                   size={16}
                   className="absolute left-3.5 top-1/2 -translate-y-1/2"
                   style={{ color: '#4b5563' }}
                 />
                 <input
-                  type="email"
+                  type="text"
                   required
-                  placeholder="admin@johadwheels.com"
-                  value={form.email}
-                  onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl text-white placeholder-gray-600 text-sm focus:outline-none transition-all"
+                  placeholder="e.g. harrison"
+                  value={form.username}
+                  onChange={(e) =>
+                    setForm((p) => ({ ...p, username: e.target.value }))
+                  }
+                  className="w-full pl-10 pr-4 py-3 rounded-xl text-white
+                             placeholder-gray-600 text-sm focus:outline-none transition-all"
                   style={{ background: '#162030', border: '1px solid #1e2d3d' }}
                   onFocus={(e) => {
                     e.currentTarget.style.borderColor = '#E8192C';
-                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(232,25,44,0.08)';
+                    e.currentTarget.style.boxShadow =
+                      '0 0 0 3px rgba(232,25,44,0.08)';
                   }}
                   onBlur={(e) => {
                     e.currentTarget.style.borderColor = '#1e2d3d';
@@ -144,7 +162,10 @@ export default function AdminLoginPage() {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium mb-1.5" style={{ color: '#9ca3af' }}>
+              <label
+                className="block text-sm font-medium mb-1.5"
+                style={{ color: '#9ca3af' }}
+              >
                 Password
               </label>
               <div className="relative">
@@ -158,12 +179,16 @@ export default function AdminLoginPage() {
                   required
                   placeholder="••••••••"
                   value={form.password}
-                  onChange={(e) => setForm((p) => ({ ...p, password: e.target.value }))}
-                  className="w-full pl-10 pr-10 py-3 rounded-xl text-white placeholder-gray-600 text-sm focus:outline-none transition-all"
+                  onChange={(e) =>
+                    setForm((p) => ({ ...p, password: e.target.value }))
+                  }
+                  className="w-full pl-10 pr-10 py-3 rounded-xl text-white
+                             placeholder-gray-600 text-sm focus:outline-none transition-all"
                   style={{ background: '#162030', border: '1px solid #1e2d3d' }}
                   onFocus={(e) => {
                     e.currentTarget.style.borderColor = '#E8192C';
-                    e.currentTarget.style.boxShadow = '0 0 0 3px rgba(232,25,44,0.08)';
+                    e.currentTarget.style.boxShadow =
+                      '0 0 0 3px rgba(232,25,44,0.08)';
                   }}
                   onBlur={(e) => {
                     e.currentTarget.style.borderColor = '#1e2d3d';
@@ -181,17 +206,56 @@ export default function AdminLoginPage() {
               </div>
             </div>
 
+            {/* Admin hint box */}
+            <div
+              className="rounded-xl p-3 text-xs space-y-1"
+              style={{
+                background: 'rgba(232,25,44,0.05)',
+                border: '1px solid rgba(232,25,44,0.15)',
+              }}
+            >
+              <p className="font-semibold" style={{ color: '#E8192C' }}>
+                Admin Usernames:
+              </p>
+              {[
+                { name: 'Harrison Muriithi', user: 'harrison' },
+                { name: 'Dishon Mwathi',     user: 'dishon'   },
+                { name: 'Joshmark Kivuma',   user: 'joshmark' },
+              ].map((a) => (
+                <div
+                  key={a.user}
+                  className="flex justify-between"
+                  style={{ color: '#6b7280' }}
+                >
+                  <span>{a.name}</span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setForm((p) => ({ ...p, username: a.user }))
+                    }
+                    className="font-mono font-bold hover:underline"
+                    style={{ color: '#E8192C' }}
+                  >
+                    {a.user}
+                  </button>
+                </div>
+              ))}
+            </div>
+
             {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 rounded-xl font-bold text-white text-sm transition-all duration-200 disabled:opacity-50 flex items-center justify-center gap-2 mt-2"
+              className="w-full py-3.5 rounded-xl font-bold text-white text-sm
+                         transition-all duration-200 disabled:opacity-50
+                         flex items-center justify-center gap-2 mt-2"
               style={{
                 background: 'linear-gradient(135deg, #E8192C, #ff4d5e)',
               }}
               onMouseEnter={(e) => {
                 if (!loading) {
-                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(232,25,44,0.4)';
+                  e.currentTarget.style.boxShadow =
+                    '0 8px 25px rgba(232,25,44,0.4)';
                   e.currentTarget.style.transform = 'translateY(-1px)';
                 }
               }}
@@ -214,7 +278,9 @@ export default function AdminLoginPage() {
           {/* Divider */}
           <div className="flex items-center gap-3 my-5">
             <div className="flex-1 h-px" style={{ background: '#1e2d3d' }} />
-            <span className="text-xs" style={{ color: '#4b5563' }}>First time?</span>
+            <span className="text-xs" style={{ color: '#4b5563' }}>
+              First time setup?
+            </span>
             <div className="flex-1 h-px" style={{ background: '#1e2d3d' }} />
           </div>
 
@@ -234,11 +300,14 @@ export default function AdminLoginPage() {
               e.currentTarget.style.background = 'transparent';
             }}
           >
-            Setup Admin Account
+            Setup Admin Accounts
           </button>
         </div>
 
-        <p className="text-center text-xs mt-5" style={{ color: '#374151' }}>
+        <p
+          className="text-center text-xs mt-5"
+          style={{ color: '#374151' }}
+        >
           © {new Date().getFullYear()} JOHAD WHEELS. All rights reserved.
         </p>
       </div>

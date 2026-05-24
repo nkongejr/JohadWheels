@@ -1,3 +1,4 @@
+// src/auth/schemas/user.schema.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
@@ -9,14 +10,17 @@ export class User {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ unique: true, sparse: true })
   email: string;
+
+  @Prop({ unique: true, sparse: true })
+  username: string; // ← NEW
 
   @Prop({ required: true })
   password: string;
 
   @Prop({ default: 'user' })
-  role: string; // 'user' | 'admin'
+  role: string;
 
   @Prop()
   phone: string;

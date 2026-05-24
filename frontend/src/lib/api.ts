@@ -48,8 +48,18 @@ export const carsApi = {
 };
 
 // Auth API
+// export const authApi = {
+//   login: (data: any) => api.post('/auth/login', data),
+//   register: (data: any) => api.post('/auth/register', data),
+//   getProfile: () => api.get('/auth/profile'),
+//   setupAdmin: () => api.get('/auth/setup-admin'),
+// };
+// src/lib/api.ts  ← update only authApi
 export const authApi = {
-  login: (data: any) => api.post('/auth/login', data),
+  // username-based login
+  login: (data: { username?: string; email?: string; password: string }) =>
+    api.post('/auth/login', data),
+
   register: (data: any) => api.post('/auth/register', data),
   getProfile: () => api.get('/auth/profile'),
   setupAdmin: () => api.get('/auth/setup-admin'),
