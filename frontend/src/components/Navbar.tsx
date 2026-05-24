@@ -267,7 +267,7 @@ export default function Navbar() {
             >
               Book Test Drive
             </Link>
-            <Link
+            {/* <Link
               href="/admin"
               onClick={() => setIsOpen(false)}
               className="px-4 py-2.5 rounded text-sm font-medium transition-colors"
@@ -277,7 +277,7 @@ export default function Navbar() {
               }}
             >
               Admin
-            </Link>
+            </Link> */}
           </div>
 
           {/* Mobile contact quick links */}
