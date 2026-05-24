@@ -40,7 +40,7 @@ export default function Navbar() {
       }}
     >
       {/* ── Top bar ── */}
-      <div
+      {/* <div
         style={{
           background: 'linear-gradient(90deg, #c0141f, #E8192C, #c0141f)',
         }}
@@ -76,7 +76,7 @@ export default function Navbar() {
             </a>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* ── Main nav ── */}
       <div
@@ -208,7 +208,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3 pb-4 mb-1" style={{ borderBottom: '1px solid #1e2d3d' }}>
             <div className="relative w-32 h-10">
               <Image
-                src="/logo.png"
+                src="/logo.jpeg"
                 alt="JOHAD WHEELS"
                 fill
                 className="object-contain object-left"
