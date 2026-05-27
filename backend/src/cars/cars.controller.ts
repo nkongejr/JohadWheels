@@ -1,8 +1,10 @@
+// src/cars/cars.controller.ts
 import {
   Controller,
   Get,
   Post,
   Put,
+  Patch,
   Delete,
   Body,
   Param,
@@ -26,6 +28,8 @@ export class CarsController {
     private readonly carsService: CarsService,
     private readonly cloudinaryService: CloudinaryService,
   ) {}
+
+  // ─── Public Routes ────────────────────────────────────────────
 
   @Get()
   findAll(@Query() filterDto: FilterCarDto) {
@@ -67,6 +71,8 @@ export class CarsController {
     return this.carsService.findOne(id);
   }
 
+  // ─── Admin Routes ─────────────────────────────────────────────
+
   @Post()
   @UseGuards(JwtAuthGuard, AdminGuard)
   create(@Body() createCarDto: CreateCarDto) {
@@ -88,6 +94,18 @@ export class CarsController {
   @UseGuards(JwtAuthGuard, AdminGuard)
   update(@Param('id') id: string, @Body() updateCarDto: UpdateCarDto) {
     return this.carsService.update(id, updateCarDto);
+  }
+
+  @Patch(':id/sold')
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  markAsSold(@Param('id') id: string) {
+    return this.carsService.markAsSold(id);
+  }
+
+  @Patch(':id/available')
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  markAsAvailable(@Param('id') id: string) {
+    return this.carsService.markAsAvailable(id);
   }
 
   @Delete(':id')

@@ -45,6 +45,9 @@ export const carsApi = {
     api.post('/cars/upload-images', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     }),
+  markAsSold: (id: string) => api.patch(`/cars/${id}/sold`),
+  markAsAvailable: (id: string) => api.patch(`/cars/${id}/available`),
+
 };
 
 // Auth API

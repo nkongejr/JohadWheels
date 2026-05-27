@@ -1,7 +1,7 @@
+// src/cars/cars.service.ts
 import {
   Injectable,
   NotFoundException,
-  BadRequestException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -14,11 +14,13 @@ import { FilterCarDto } from './dto/filter-car.dto';
 export class CarsService {
   constructor(@InjectModel(Car.name) private carModel: Model<CarDocument>) {}
 
+  // ─── Create ───────────────────────────────────────────────────
   async create(createCarDto: CreateCarDto): Promise<Car> {
     const car = new this.carModel(createCarDto);
     return car.save();
   }
 
+  // ─── Find All (with filters) ──────────────────────────────────
   async findAll(filterDto: FilterCarDto) {
     const {
       brand,
@@ -100,6 +102,7 @@ export class CarsService {
     };
   }
 
+  // ─── Find Featured ────────────────────────────────────────────
   async findFeatured(): Promise<Car[]> {
     return this.carModel
       .find({ isFeatured: true, isAvailable: true })
@@ -108,6 +111,7 @@ export class CarsService {
       .exec();
   }
 
+  // ─── Find Luxury ──────────────────────────────────────────────
   async findLuxury(): Promise<Car[]> {
     return this.carModel
       .find({ isLuxury: true, isAvailable: true })
@@ -116,6 +120,7 @@ export class CarsService {
       .exec();
   }
 
+  // ─── Find One ─────────────────────────────────────────────────
   async findOne(id: string): Promise<Car> {
     const car = await this.carModel.findById(id).exec();
     if (!car) {
@@ -126,6 +131,7 @@ export class CarsService {
     return car;
   }
 
+  // ─── Update ───────────────────────────────────────────────────
   async update(id: string, updateCarDto: UpdateCarDto): Promise<Car> {
     const car = await this.carModel
       .findByIdAndUpdate(id, updateCarDto, { new: true })
@@ -136,6 +142,7 @@ export class CarsService {
     return car;
   }
 
+  // ─── Delete ───────────────────────────────────────────────────
   async remove(id: string): Promise<void> {
     const result = await this.carModel.findByIdAndDelete(id).exec();
     if (!result) {
@@ -143,24 +150,64 @@ export class CarsService {
     }
   }
 
+  // ─── Mark as Sold ─────────────────────────────────────────────
+  async markAsSold(id: string) {
+    const car = await this.carModel.findByIdAndUpdate(
+      id,
+      {
+        isSold: true,
+        soldAt: new Date(),
+      },
+      { new: true },
+    );
+    if (!car) throw new NotFoundException('Car not found');
+    return { message: 'Car marked as sold', car };
+  }
+
+  // ─── Mark as Available ────────────────────────────────────────
+  async markAsAvailable(id: string) {
+    const car = await this.carModel.findByIdAndUpdate(
+      id,
+      {
+        isSold: false,
+        soldAt: null,
+      },
+      { new: true },
+    );
+    if (!car) throw new NotFoundException('Car not found');
+    return { message: 'Car marked as available', car };
+  }
+
+  // ─── Get Brands ───────────────────────────────────────────────
   async getBrands(): Promise<string[]> {
     return this.carModel.distinct('brand').exec();
   }
 
+  // ─── Get Types ────────────────────────────────────────────────
   async getTypes(): Promise<string[]> {
     return this.carModel.distinct('type').exec();
   }
 
+  // ─── Get Stats ────────────────────────────────────────────────
   async getStats() {
     const total = await this.carModel.countDocuments();
     const available = await this.carModel.countDocuments({ isAvailable: true });
     const featured = await this.carModel.countDocuments({ isFeatured: true });
     const luxury = await this.carModel.countDocuments({ isLuxury: true });
+    const sold = await this.carModel.countDocuments({ isSold: true }); // ← NEW
     const brands = await this.carModel.distinct('brand');
 
-    return { total, available, featured, luxury, totalBrands: brands.length };
+    return {
+      total,
+      available,
+      featured,
+      luxury,
+      sold,
+      totalBrands: brands.length,
+    };
   }
 
+  // ─── Seed Cars ────────────────────────────────────────────────
   async seedCars(): Promise<void> {
     const count = await this.carModel.countDocuments();
     if (count > 0) return;
@@ -200,6 +247,7 @@ export class CarsService {
         isAvailable: true,
         isFeatured: true,
         isLuxury: true,
+        isSold: false,
         location: 'Nairobi, Kenya',
       },
       {
@@ -236,6 +284,7 @@ export class CarsService {
         isAvailable: true,
         isFeatured: true,
         isLuxury: true,
+        isSold: false,
         location: 'Nairobi, Kenya',
       },
       {
@@ -268,10 +317,11 @@ export class CarsService {
           'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800',
         ],
         description:
-          'The Range Rover Sport combines breathtaking performance with exceptional luxury. Dominate any terrain in style.',
+          'The Range Rover Sport combines breathtaking performance with exceptional luxury.',
         isAvailable: true,
         isFeatured: true,
         isLuxury: true,
+        isSold: false,
         location: 'Karatina, Kenya',
       },
       {
@@ -303,10 +353,11 @@ export class CarsService {
           'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800',
         ],
         description:
-          'The Porsche Cayenne – where sports car performance meets SUV versatility. Uncompromising luxury.',
+          'The Porsche Cayenne – where sports car performance meets SUV versatility.',
         isAvailable: true,
         isFeatured: true,
         isLuxury: true,
+        isSold: false,
         location: 'Nairobi, Kenya',
       },
       {
@@ -343,6 +394,7 @@ export class CarsService {
         isAvailable: true,
         isFeatured: false,
         isLuxury: true,
+        isSold: false,
         location: 'Mombasa, Kenya',
       },
       {
@@ -373,10 +425,11 @@ export class CarsService {
           'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800',
         ],
         description:
-          'The Lamborghini Urus – the world\'s first Super Sport Utility Vehicle. Raw power meets everyday usability.',
+          "The Lamborghini Urus – the world's first Super Sport Utility Vehicle.",
         isAvailable: true,
         isFeatured: true,
         isLuxury: true,
+        isSold: false,
         location: 'Nairobi, Kenya',
       },
       {
@@ -407,10 +460,11 @@ export class CarsService {
           'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800',
         ],
         description:
-          'Ferrari GTC4Lusso – where passion meets performance. A thoroughbred supercar for the passionate driver.',
+          'Ferrari GTC4Lusso – where passion meets performance.',
         isAvailable: true,
         isFeatured: true,
         isLuxury: true,
+        isSold: false,
         location: 'Nairobi, Kenya',
       },
       {
@@ -442,10 +496,11 @@ export class CarsService {
           'https://images.unsplash.com/photo-1562141961-b8df5eedbb66?w=800',
         ],
         description:
-          'Bentley Continental GT – the grand tourer that defines British luxury. Handcrafted perfection.',
+          'Bentley Continental GT – the grand tourer that defines British luxury.',
         isAvailable: true,
         isFeatured: false,
         isLuxury: true,
+        isSold: false,
         location: 'Nairobi, Kenya',
       },
     ];

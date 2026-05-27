@@ -3,44 +3,80 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
-  Car, MessageSquare, TrendingUp, Users,
+  Car, MessageSquare, TrendingUp,
   Plus, Eye, ArrowRight, Activity,
+  CheckCircle, XCircle, DollarSign,
 } from 'lucide-react';
-import { carsApi, contactApi, statsApi } from '@/lib/api';
+import { carsApi, contactApi } from '@/lib/api';
+import toast from 'react-hot-toast';
 
 export default function DashboardPage() {
   const [stats, setStats] = useState({
-    totalCars: 0, featuredCars: 0, totalInquiries: 0, newInquiries: 0,
+    totalCars: 0,
+    featuredCars: 0,
+    soldCars: 0,
+    totalInquiries: 0,
+    newInquiries: 0,
   });
   const [recentCars, setRecentCars] = useState<any[]>([]);
   const [recentInquiries, setRecentInquiries] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [updatingId, setUpdatingId] = useState<string | null>(null);
 
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const [carsRes, inquiriesRes] = await Promise.all([
-          carsApi.getAll({ limit: 5 }),
-          contactApi.getAll(),
-        ]);
-        const cars = carsRes.data?.cars || carsRes.data || [];
-        const inquiries = inquiriesRes.data || [];
-        setRecentCars(cars.slice(0, 5));
-        setRecentInquiries(inquiries.slice(0, 5));
-        setStats({
-          totalCars: carsRes.data?.total || cars.length,
-          featuredCars: cars.filter((c: any) => c.isFeatured).length,
-          totalInquiries: inquiries.length,
-          newInquiries: inquiries.filter((i: any) => i.status === 'new').length,
-        });
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    load();
-  }, []);
+  const load = async () => {
+    try {
+      const [carsRes, inquiriesRes] = await Promise.all([
+        carsApi.getAll({ limit: 10 }),
+        contactApi.getAll(),
+      ]);
+      const cars = carsRes.data?.cars || carsRes.data || [];
+      const inquiries = inquiriesRes.data || [];
+
+      setRecentCars(cars.slice(0, 6));
+      setStats({
+        totalCars: carsRes.data?.total || cars.length,
+        featuredCars: cars.filter((c: any) => c.isFeatured).length,
+        soldCars: cars.filter((c: any) => c.isSold).length,
+        totalInquiries: inquiries.length,
+        newInquiries: inquiries.filter((i: any) => i.status === 'new').length,
+      });
+      setRecentInquiries(inquiries.slice(0, 5));
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => { load(); }, []);
+
+  // ─── Mark as Sold ─────────────────────────────────────────────
+  const handleMarkSold = async (car: any) => {
+    setUpdatingId(car._id);
+    try {
+      await carsApi.markAsSold(car._id);
+      toast.success(`${car.brand} ${car.model} marked as sold!`);
+      await load();
+    } catch {
+      toast.error('Failed to update status');
+    } finally {
+      setUpdatingId(null);
+    }
+  };
+
+  // ─── Mark as Available ────────────────────────────────────────
+  const handleMarkAvailable = async (car: any) => {
+    setUpdatingId(car._id);
+    try {
+      await carsApi.markAsAvailable(car._id);
+      toast.success(`${car.brand} ${car.model} is now available!`);
+      await load();
+    } catch {
+      toast.error('Failed to update status');
+    } finally {
+      setUpdatingId(null);
+    }
+  };
 
   const statCards = [
     {
@@ -58,10 +94,10 @@ export default function DashboardPage() {
       color: '#3b82f6',
     },
     {
-      label: 'Total Inquiries',
-      value: stats.totalInquiries,
-      icon: MessageSquare,
-      href: '/admin/inquiries',
+      label: 'Cars Sold',
+      value: stats.soldCars,
+      icon: CheckCircle,
+      href: '/admin/cars',
       color: '#10b981',
     },
     {
@@ -127,8 +163,9 @@ export default function DashboardPage() {
         })}
       </div>
 
-      {/* Two columns */}
+      {/* Two Columns */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
         {/* Recent Cars */}
         <div
           className="rounded-2xl p-5"
@@ -138,18 +175,19 @@ export default function DashboardPage() {
             <h3 className="font-bold text-white">Recent Cars</h3>
             <Link
               href="/admin/cars"
-              className="text-xs flex items-center gap-1 transition-colors"
+              className="text-xs flex items-center gap-1"
               style={{ color: '#E8192C' }}
             >
               View all <ArrowRight size={12} />
             </Link>
           </div>
+
           <div className="space-y-3">
             {loading ? (
               [...Array(4)].map((_, i) => (
                 <div
                   key={i}
-                  className="h-12 rounded-xl animate-pulse"
+                  className="h-14 rounded-xl animate-pulse"
                   style={{ background: '#162030' }}
                 />
               ))
@@ -163,23 +201,88 @@ export default function DashboardPage() {
                 <div
                   key={car._id}
                   className="flex items-center justify-between p-3 rounded-xl"
-                  style={{ background: '#162030' }}
+                  style={{
+                    background: '#162030',
+                    border: car.isSold
+                      ? '1px solid rgba(16,185,129,0.2)'
+                      : '1px solid transparent',
+                  }}
                 >
-                  <div>
-                    <div className="text-white text-sm font-semibold">
-                      {car.brand} {car.model}
+                  {/* Car Info */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="text-white text-sm font-semibold truncate">
+                        {car.brand} {car.model}
+                      </span>
+                      {car.isSold && (
+                        <span
+                          className="text-xs font-bold px-1.5 py-0.5 rounded shrink-0"
+                          style={{
+                            background: 'rgba(16,185,129,0.15)',
+                            color: '#10b981',
+                          }}
+                        >
+                          SOLD
+                        </span>
+                      )}
                     </div>
                     <div className="text-xs" style={{ color: '#6b7280' }}>
-                      {car.year} · {car.condition}
+                      {car.year} · KES {(car.price / 1000000).toFixed(1)}M
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="text-xs font-bold px-2 py-0.5 rounded"
-                      style={{ background: 'rgba(232,25,44,0.1)', color: '#E8192C' }}
-                    >
-                      KES {(car.price / 1000000).toFixed(1)}M
-                    </span>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-2 ml-2 shrink-0">
+
+                    {/* Sold Toggle Button */}
+                    {updatingId === car._id ? (
+                      <div
+                        className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin"
+                        style={{ borderColor: '#10b981' }}
+                      />
+                    ) : car.isSold ? (
+                      // Undo Sold
+                      <button
+                        onClick={() => handleMarkAvailable(car)}
+                        title="Mark as Available"
+                        className="flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-lg transition-all"
+                        style={{
+                          background: 'rgba(16,185,129,0.1)',
+                          color: '#10b981',
+                          border: '1px solid rgba(16,185,129,0.2)',
+                        }}
+                      >
+                        <XCircle size={12} />
+                        Undo
+                      </button>
+                    ) : (
+                      // Mark Sold
+                      <button
+                        onClick={() => handleMarkSold(car)}
+                        title="Mark as Sold"
+                        className="flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-lg transition-all"
+                        style={{
+                          background: 'rgba(232,25,44,0.08)',
+                          color: '#E8192C',
+                          border: '1px solid rgba(232,25,44,0.2)',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = 'rgba(16,185,129,0.1)';
+                          e.currentTarget.style.color = '#10b981';
+                          e.currentTarget.style.borderColor = 'rgba(16,185,129,0.3)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = 'rgba(232,25,44,0.08)';
+                          e.currentTarget.style.color = '#E8192C';
+                          e.currentTarget.style.borderColor = 'rgba(232,25,44,0.2)';
+                        }}
+                      >
+                        <DollarSign size={12} />
+                        Sold
+                      </button>
+                    )}
+
+                    {/* Edit */}
                     <Link href={`/admin/cars/${car._id}/edit`}>
                       <Eye size={14} style={{ color: '#6b7280' }} />
                     </Link>
@@ -230,7 +333,10 @@ export default function DashboardPage() {
                     <div className="text-white text-sm font-semibold">
                       {inq.name}
                     </div>
-                    <div className="text-xs truncate max-w-[180px]" style={{ color: '#6b7280' }}>
+                    <div
+                      className="text-xs truncate max-w-[180px]"
+                      style={{ color: '#6b7280' }}
+                    >
                       {inq.subject || inq.message?.slice(0, 40)}
                     </div>
                   </div>
@@ -270,10 +376,7 @@ export default function DashboardPage() {
                 key={action.label}
                 href={action.href}
                 className="flex flex-col items-center gap-2 p-4 rounded-xl text-center transition-all duration-200 hover:-translate-y-0.5"
-                style={{
-                  background: '#162030',
-                  border: '1px solid #1e2d3d',
-                }}
+                style={{ background: '#162030', border: '1px solid #1e2d3d' }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLElement).style.borderColor = action.color + '40';
                 }}
@@ -287,7 +390,9 @@ export default function DashboardPage() {
                 >
                   <Icon size={18} style={{ color: action.color }} />
                 </div>
-                <span className="text-xs font-semibold text-white">{action.label}</span>
+                <span className="text-xs font-semibold text-white">
+                  {action.label}
+                </span>
               </Link>
             );
           })}
