@@ -206,6 +206,17 @@ export class CarsService {
       totalBrands: brands.length,
     };
   }
+  // src/cars/cars.service.ts
+async fixSoldField() {
+  const result = await this.carModel.updateMany(
+    { isSold: { $exists: false } },
+    { $set: { isSold: false } },
+  );
+  return {
+    message: 'Fixed existing cars',
+    updated: result.modifiedCount,
+  };
+}
 
   // ─── Seed Cars ────────────────────────────────────────────────
   async seedCars(): Promise<void> {

@@ -1,3 +1,4 @@
+// src/cars/schemas/car.schema.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
@@ -21,10 +22,10 @@ export class Car {
   originalPrice: number;
 
   @Prop({ required: true })
-  type: string; // Sedan, SUV, Coupe, Convertible, etc.
+  type: string;
 
   @Prop({ required: true })
-  condition: string; // New, Used, Certified Pre-Owned
+  condition: string;
 
   @Prop()
   mileage: number;
@@ -33,10 +34,10 @@ export class Car {
   engine: string;
 
   @Prop()
-  transmission: string; // Automatic, Manual
+  transmission: string;
 
   @Prop()
-  fuelType: string; // Petrol, Diesel, Electric, Hybrid
+  fuelType: string;
 
   @Prop()
   color: string;
@@ -67,6 +68,12 @@ export class Car {
 
   @Prop({ default: false })
   isLuxury: boolean;
+
+  @Prop({ default: false })   // ← NEW
+  isSold: boolean;
+
+  @Prop()                     // ← NEW
+  soldAt: Date;
 
   @Prop({ default: 0 })
   views: number;

@@ -113,4 +113,14 @@ export class CarsController {
   remove(@Param('id') id: string) {
     return this.carsService.remove(id);
   }
+  // src/cars/cars.controller.ts
+  @Get('fix-sold')
+  fixSoldField() {
+    return this.carsService.fixSoldField();
+  }
+}
+
+
+function fixSoldField() {
+  throw new Error('Function not implemented.');
 }
