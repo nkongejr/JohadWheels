@@ -22,6 +22,7 @@ import {
   Car,
   Gauge,
   Palette,
+  BadgeCheck,
 } from 'lucide-react';
 
 export default function CarDetailPage() {
@@ -63,7 +64,10 @@ export default function CarDetailPage() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen" style={{ background: '#0a0a0a', paddingTop: '96px' }}>
+      <div
+        className="min-h-screen"
+        style={{ background: '#0a0a0a', paddingTop: '96px' }}
+      >
         <div className="max-w-7xl mx-auto px-4 py-10">
           {/* Back button */}
           <button
@@ -73,6 +77,43 @@ export default function CarDetailPage() {
             <ArrowLeft size={18} />
             Back to Inventory
           </button>
+
+          {/* ── SOLD BANNER ── */}
+          {car.isSold && (
+            <div
+              className="flex items-center gap-3 px-5 py-4 rounded-2xl mb-6"
+              style={{
+                background: 'rgba(16,185,129,0.08)',
+                border: '1px solid rgba(16,185,129,0.25)',
+              }}
+            >
+              <div
+                className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                style={{ background: 'rgba(16,185,129,0.15)' }}
+              >
+                <BadgeCheck size={22} style={{ color: '#10b981' }} />
+              </div>
+              <div>
+                <p className="font-black text-white text-sm">
+                  This vehicle has been sold
+                </p>
+                <p className="text-xs mt-0.5" style={{ color: '#6b7280' }}>
+                  Contact us to check similar vehicles in our inventory
+                </p>
+              </div>
+              <Link
+                href="/inventory"
+                className="ml-auto shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition-all"
+                style={{
+                  background: 'rgba(16,185,129,0.15)',
+                  color: '#10b981',
+                  border: '1px solid rgba(16,185,129,0.3)',
+                }}
+              >
+                View Inventory
+              </Link>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             {/* Left - Images */}
@@ -84,19 +125,41 @@ export default function CarDetailPage() {
                     src={car.images[selectedImage]}
                     alt={`${car.brand} ${car.model}`}
                     fill
-                    className="object-cover"
+                    className={`object-cover transition-all duration-300 ${
+                      car.isSold ? 'brightness-50' : ''
+                    }`}
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-7xl">
                     🚗
                   </div>
                 )}
-                {car.isFeatured && (
+
+                {/* ── SOLD overlay on image ── */}
+                {car.isSold && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div
+                      className="px-10 py-3 font-black text-white text-3xl tracking-widest"
+                      style={{
+                        background: 'rgba(16,185,129,0.85)',
+                        border: '3px solid #10b981',
+                        borderRadius: '12px',
+                        boxShadow: '0 0 40px rgba(16,185,129,0.4)',
+                        transform: 'rotate(-12deg)',
+                      }}
+                    >
+                      SOLD
+                    </div>
+                  </div>
+                )}
+
+                {/* Badges */}
+                {car.isFeatured && !car.isSold && (
                   <div className="absolute top-4 left-4 bg-yellow-500 text-black text-sm font-bold px-3 py-1 rounded-full">
                     Featured
                   </div>
                 )}
-                {discount && (
+                {discount && !car.isSold && (
                   <div className="absolute top-4 right-4 bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-full">
                     -{discount}%
                   </div>
@@ -120,7 +183,12 @@ export default function CarDetailPage() {
                           : 'border-transparent'
                       }`}
                     >
-                      <Image src={img} alt="" fill className="object-cover" />
+                      <Image
+                        src={img}
+                        alt=""
+                        fill
+                        className={`object-cover ${car.isSold ? 'brightness-50' : ''}`}
+                      />
                     </button>
                   ))}
                 </div>
@@ -177,51 +245,15 @@ export default function CarDetailPage() {
                 </h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {[
-                    {
-                      icon: <Calendar size={16} />,
-                      label: 'Year',
-                      value: car.year,
-                    },
-                    {
-                      icon: <Car size={16} />,
-                      label: 'Type',
-                      value: car.type,
-                    },
-                    {
-                      icon: <Gauge size={16} />,
-                      label: 'Mileage',
-                      value: formatMileage(car.mileage),
-                    },
-                    {
-                      icon: <Settings size={16} />,
-                      label: 'Transmission',
-                      value: car.transmission || 'N/A',
-                    },
-                    {
-                      icon: <Fuel size={16} />,
-                      label: 'Fuel',
-                      value: car.fuelType || 'N/A',
-                    },
-                    {
-                      icon: <Users size={16} />,
-                      label: 'Seats',
-                      value: car.seats || 'N/A',
-                    },
-                    {
-                      icon: <Palette size={16} />,
-                      label: 'Color',
-                      value: car.color || 'N/A',
-                    },
-                    {
-                      icon: <Car size={16} />,
-                      label: 'Condition',
-                      value: car.condition,
-                    },
-                    {
-                      icon: <Settings size={16} />,
-                      label: 'Engine',
-                      value: car.engine || 'N/A',
-                    },
+                    { icon: <Calendar size={16} />, label: 'Year', value: car.year },
+                    { icon: <Car size={16} />, label: 'Type', value: car.type },
+                    { icon: <Gauge size={16} />, label: 'Mileage', value: formatMileage(car.mileage) },
+                    { icon: <Settings size={16} />, label: 'Transmission', value: car.transmission || 'N/A' },
+                    { icon: <Fuel size={16} />, label: 'Fuel', value: car.fuelType || 'N/A' },
+                    { icon: <Users size={16} />, label: 'Seats', value: car.seats || 'N/A' },
+                    { icon: <Palette size={16} />, label: 'Color', value: car.color || 'N/A' },
+                    { icon: <Car size={16} />, label: 'Condition', value: car.condition },
+                    { icon: <Settings size={16} />, label: 'Engine', value: car.engine || 'N/A' },
                   ].map((spec, i) => (
                     <div
                       key={i}
@@ -248,8 +280,13 @@ export default function CarDetailPage() {
               <div className="sticky top-24 space-y-4">
                 {/* Price Card */}
                 <div
-                  className="p-6 rounded-2xl border border-gray-800"
-                  style={{ background: '#111111' }}
+                  className="p-6 rounded-2xl border"
+                  style={{
+                    background: '#111111',
+                    borderColor: car.isSold
+                      ? 'rgba(16,185,129,0.25)'
+                      : '#1f2937',
+                  }}
                 >
                   <div className="mb-2">
                     <span className="text-gray-400 text-sm">
@@ -261,10 +298,14 @@ export default function CarDetailPage() {
                   </h1>
 
                   <div className="mt-4 mb-2">
-                    <div className="text-3xl font-black text-yellow-400">
+                    <div
+                      className={`text-3xl font-black ${
+                        car.isSold ? 'text-gray-500 line-through' : 'text-yellow-400'
+                      }`}
+                    >
                       {formatPrice(car.price)}
                     </div>
-                    {car.originalPrice && car.originalPrice > car.price && (
+                    {car.originalPrice && car.originalPrice > car.price && !car.isSold && (
                       <div className="flex items-center gap-2 mt-1">
                         <span className="text-gray-500 text-sm line-through">
                           {formatPrice(car.originalPrice)}
@@ -283,44 +324,101 @@ export default function CarDetailPage() {
                     </div>
                   )}
 
+                  {/* ── Status Badge ── */}
                   <div
-                    className={`inline-flex items-center gap-1.5 text-sm font-bold px-3 py-1 rounded-full mb-5 ${
-                      car.isAvailable
-                        ? 'bg-green-500/10 text-green-400'
-                        : 'bg-red-500/10 text-red-400'
-                    }`}
+                    className="inline-flex items-center gap-1.5 text-sm font-bold px-3 py-1 rounded-full mb-5"
+                    style={
+                      car.isSold
+                        ? {
+                            background: 'rgba(16,185,129,0.1)',
+                            color: '#10b981',
+                          }
+                        : car.isAvailable
+                        ? {
+                            background: 'rgba(34,197,94,0.1)',
+                            color: '#22c55e',
+                          }
+                        : {
+                            background: 'rgba(239,68,68,0.1)',
+                            color: '#ef4444',
+                          }
+                    }
                   >
                     <span
-                      className={`w-2 h-2 rounded-full ${car.isAvailable ? 'bg-green-400' : 'bg-red-400'}`}
+                      className="w-2 h-2 rounded-full"
+                      style={{
+                        background: car.isSold
+                          ? '#10b981'
+                          : car.isAvailable
+                          ? '#22c55e'
+                          : '#ef4444',
+                      }}
                     />
-                    {car.isAvailable ? 'Available' : 'Sold'}
+                    {car.isSold ? 'Sold' : car.isAvailable ? 'Available' : 'Not Available'}
                   </div>
 
-                  {/* CTA Buttons */}
-                  <div className="space-y-2">
-                    <a
-                      href={`https://wa.me/254716296585?text=Hi, I'm interested in the ${car.brand} ${car.model} ${car.year} listed on JOHAD WHEELS for ${formatPrice(car.price)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-500 text-white py-3 rounded-lg font-bold text-sm transition-colors"
-                    >
-                      <MessageCircle size={18} />
-                      WhatsApp Enquiry
-                    </a>
-                    <a
-                      href="tel:0716296585"
-                      className="w-full flex items-center justify-center gap-2 btn-gold py-3 rounded-lg font-bold text-sm"
-                    >
-                      <Phone size={18} />
-                      Call Now
-                    </a>
-                    <Link
-                      href="/contact"
-                      className="w-full flex items-center justify-center border border-gray-700 hover:border-yellow-500 text-gray-300 hover:text-yellow-400 py-3 rounded-lg font-bold text-sm transition-colors"
-                    >
-                      Book Test Drive
-                    </Link>
-                  </div>
+                  {/* ── CTA Buttons ── */}
+                  {car.isSold ? (
+                    // Sold state - show similar cars button
+                    <div className="space-y-2">
+                      <div
+                        className="w-full flex items-center justify-center gap-2 py-3 rounded-lg font-bold text-sm"
+                        style={{
+                          background: 'rgba(16,185,129,0.1)',
+                          color: '#10b981',
+                          border: '1px solid rgba(16,185,129,0.2)',
+                        }}
+                      >
+                        <BadgeCheck size={18} />
+                        This Vehicle Has Been Sold
+                      </div>
+                      <Link
+                        href="/inventory"
+                        className="w-full flex items-center justify-center gap-2 py-3 rounded-lg font-bold text-sm transition-all"
+                        style={{
+                          background: 'linear-gradient(135deg, #ca8a04, #eab308)',
+                          color: '#000',
+                        }}
+                      >
+                        Browse Similar Vehicles
+                      </Link>
+                      <a
+                        href={`https://wa.me/254716296585?text=Hi, the ${car.brand} ${car.model} ${car.year} is sold. Do you have similar vehicles?`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-500 text-white py-3 rounded-lg font-bold text-sm transition-colors"
+                      >
+                        <MessageCircle size={18} />
+                        Ask for Similar Cars
+                      </a>
+                    </div>
+                  ) : (
+                    // Available state - normal buttons
+                    <div className="space-y-2">
+                      <a
+                        href={`https://wa.me/254716296585?text=Hi, I'm interested in the ${car.brand} ${car.model} ${car.year} listed on JOHAD WHEELS for ${formatPrice(car.price)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-500 text-white py-3 rounded-lg font-bold text-sm transition-colors"
+                      >
+                        <MessageCircle size={18} />
+                        WhatsApp Enquiry
+                      </a>
+                      <a
+                        href="tel:0716296585"
+                        className="w-full flex items-center justify-center gap-2 btn-gold py-3 rounded-lg font-bold text-sm"
+                      >
+                        <Phone size={18} />
+                        Call Now
+                      </a>
+                      <Link
+                        href="/contact"
+                        className="w-full flex items-center justify-center border border-gray-700 hover:border-yellow-500 text-gray-300 hover:text-yellow-400 py-3 rounded-lg font-bold text-sm transition-colors"
+                      >
+                        Book Test Drive
+                      </Link>
+                    </div>
+                  )}
                 </div>
 
                 {/* Quick Info */}
@@ -337,9 +435,10 @@ export default function CarDetailPage() {
                       { label: 'Model', value: car.model },
                       { label: 'Year', value: car.year },
                       { label: 'Condition', value: car.condition },
+                      { label: 'Mileage', value: formatMileage(car.mileage) },
                       {
-                        label: 'Mileage',
-                        value: formatMileage(car.mileage),
+                        label: 'Status',
+                        value: car.isSold ? '✅ Sold' : '🟢 Available',
                       },
                     ].map((item) => (
                       <div
@@ -347,7 +446,15 @@ export default function CarDetailPage() {
                         className="flex justify-between text-sm"
                       >
                         <span className="text-gray-500">{item.label}</span>
-                        <span className="text-white font-medium">
+                        <span
+                          className="font-medium"
+                          style={{
+                            color:
+                              item.label === 'Status' && car.isSold
+                                ? '#10b981'
+                                : 'white',
+                          }}
+                        >
                           {item.value}
                         </span>
                       </div>

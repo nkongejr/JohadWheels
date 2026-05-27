@@ -241,7 +241,7 @@ export default function Footer() {
                     (e.currentTarget.style.color = '#9ca3af')
                   }
                 >
-                  joshmark.ke254@gmail.com
+                 Johadwheels.co.ke
                 </a>
               </li>
             </ul>
