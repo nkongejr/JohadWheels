@@ -100,7 +100,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/profile.php?id=61590238221238"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Facebook"
@@ -119,7 +119,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://tiktok.com"
+                href="https://www.tiktok.com/@johadwheels?fbclid=IwY2xjawR3s7hleHRuA2FlbQIxMQBzcnRjBmFwcF9pZAwzNTA2ODU1MzE3MjgAAR6c4sQvjnlU9W27V__3TlsVSHBfnDvdjAvAHH-knsb6gJKo_6gtTTK48idp9Q_aem_LOxv7C_0MZ3mR_j-4pb-1g"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="TikTok"
@@ -203,10 +203,10 @@ export default function Footer() {
                 </div>
                 <div className="text-sm space-y-1">
                   {[
-                    { tel: '0797250555', display: '0797 250 555' },
-                    { tel: '0721424515', display: '0721 424 515' },
-                    { tel: '0715295535', display: '0715 295 535' },
-                  ].map((p) => (
+                    { tel: '07162965855', display: '0716 296 585' },
+                    { tel: '0797230565', display: '0797 230 565' },
+                    { tel: '0791424616', display: '0791 424 616' },
+           ].map((p) => (
                     <a
                       key={p.tel}
                       href={`tel:${p.tel}`}
@@ -232,7 +232,7 @@ export default function Footer() {
                   <Mail size={14} style={{ color: '#E8192C' }} />
                 </div>
                 <a
-                  href="mailto:joshmark.ke254@gmail.com"
+                  href="mailto:Johadwheels.co.ke"
                   className="text-gray-400 text-sm pt-1.5 transition-colors duration-200"
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.color = '#E8192C')
