@@ -63,21 +63,10 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-4 text-gray-400 leading-relaxed">
                 <p>
-                  JOHAD WHEELS was founded in 2022 with a simple yet powerful
-                  mission: to make luxury car ownership accessible to discerning
-                  Kenyan buyers.
-                </p>
-                <p>
-                  We specialize in sourcing, verifying, and selling premium
-                  automobiles from leading manufacturers including BMW,
-                  Mercedes-Benz, Audi, Porsche, Range Rover, Lamborghini,
-                  Ferrari, and Bentley.
-                </p>
-                <p>
-                  Based in Karatina, Kenya, we serve clients across the country
-                  with transparent pricing, flexible financing options, and
-                  exceptional customer service. Every vehicle in our inventory
-                  undergoes thorough inspection and verification.
+                 At JOHAD WHEELS, we are passionate about connecting aspiring car owners with quality vehicles that fit their lifestyle, needs, and budget. Founded in 2022, our mission has been simple — to make vehicle ownership accessible, reliable, and stress-free for customers across Kenya.
+Based in Karatina, we specialize in sourcing, verifying, and selling a wide range of vehicles from trusted global manufacturers. Whether you are looking for a family car, SUV, pickup, executive vehicle, or everyday commuter, we are committed to helping you find the right match.
+We proudly serve clients across Kenya through transparent pricing, flexible financing options, and exceptional customer service. Every vehicle in our inventory undergoes thorough inspection and verification to ensure quality, performance, and peace of mind for our customers.
+At JOHAD WHEELS, we believe buying a car should be an exciting and confident experience, and we are dedicated to building lasting relationships through trust, professionalism, and reliability.
                 </p>
               </div>
             </div>

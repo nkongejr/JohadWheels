@@ -396,7 +396,7 @@ export default function CarDetailPage() {
                     // Available state - normal buttons
                     <div className="space-y-2">
                       <a
-                        href={`https://wa.me/254716296585?text=Hi, I'm interested in the ${car.brand} ${car.model} ${car.year} listed on JOHAD WHEELS for ${formatPrice(car.price)}`}
+                        href={`https://wa.me/254797946004?text=Hi, I'm interested in the ${car.brand} ${car.model} ${car.year} listed on JOHAD WHEELS for ${formatPrice(car.price)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-500 text-white py-3 rounded-lg font-bold text-sm transition-colors"
