@@ -16,6 +16,8 @@ import {
   ChevronRight,
   Bell,
   Settings,
+  Shield,
+  User,
 } from 'lucide-react';
 
 const navItems = [
@@ -27,11 +29,16 @@ const navItems = [
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ];
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('johad_token');
@@ -51,6 +58,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       router.push('/admin');
     }
   }, []);
+
+  // Close profile menu on outside click
+  useEffect(() => {
+    const close = () => setShowProfileMenu(false);
+    if (showProfileMenu) {
+      document.addEventListener('click', close);
+      return () => document.removeEventListener('click', close);
+    }
+  }, [showProfileMenu]);
 
   const handleLogout = () => {
     localStorage.removeItem('johad_token');
@@ -105,11 +121,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="px-4 py-3">
           <div
             className="flex items-center gap-3 p-3 rounded-xl"
-            style={{ background: 'rgba(232,25,44,0.08)', border: '1px solid rgba(232,25,44,0.15)' }}
+            style={{
+              background: 'rgba(232,25,44,0.08)',
+              border: '1px solid rgba(232,25,44,0.15)',
+            }}
           >
             <div
               className="w-9 h-9 rounded-full flex items-center justify-center font-black text-sm text-white shrink-0"
-              style={{ background: 'linear-gradient(135deg, #E8192C, #ff4d5e)' }}
+              style={{
+                background: 'linear-gradient(135deg, #E8192C, #ff4d5e)',
+              }}
             >
               {user?.name?.charAt(0) || 'A'}
             </div>
@@ -117,7 +138,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <div className="text-white text-sm font-bold truncate">
                 {user?.name || 'Admin'}
               </div>
-              <div className="text-xs" style={{ color: '#E8192C' }}>
+              <div className="flex items-center gap-1 text-xs" style={{ color: '#E8192C' }}>
+                <Shield size={10} />
                 Administrator
               </div>
             </div>
@@ -142,9 +164,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 onClick={() => setSidebarOpen(false)}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group"
                 style={{
-                  background: active ? 'rgba(232,25,44,0.12)' : 'transparent',
+                  background: active
+                    ? 'rgba(232,25,44,0.12)'
+                    : 'transparent',
                   color: active ? '#E8192C' : '#9ca3af',
-                  border: active ? '1px solid rgba(232,25,44,0.2)' : '1px solid transparent',
+                  border: active
+                    ? '1px solid rgba(232,25,44,0.2)'
+                    : '1px solid transparent',
                 }}
               >
                 <Icon size={18} />
@@ -163,7 +189,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             style={{ border: '1px solid transparent' }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = 'rgba(232,25,44,0.08)';
-              e.currentTarget.style.border = '1px solid rgba(232,25,44,0.15)';
+              e.currentTarget.style.border =
+                '1px solid rgba(232,25,44,0.15)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = 'transparent';
@@ -200,9 +227,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
 
           <div className="flex items-center gap-3 ml-auto">
+            {/* Notifications */}
             <button
               className="w-9 h-9 rounded-lg flex items-center justify-center transition-colors relative"
-              style={{ background: '#162030', border: '1px solid #1e2d3d' }}
+              style={{
+                background: '#162030',
+                border: '1px solid #1e2d3d',
+              }}
             >
               <Bell size={16} style={{ color: '#9ca3af' }} />
               <span
@@ -210,20 +241,199 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 style={{ background: '#E8192C' }}
               />
             </button>
+
+            {/* View Site */}
             <Link
               href="/"
               className="text-xs font-medium px-3 py-2 rounded-lg transition-colors"
-              style={{ background: '#162030', color: '#9ca3af', border: '1px solid #1e2d3d' }}
+              style={{
+                background: '#162030',
+                color: '#9ca3af',
+                border: '1px solid #1e2d3d',
+              }}
             >
               View Site
             </Link>
+
+            {/* ── Admin Profile Icon (NEW) ── */}
+            <div className="relative">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowProfileMenu(!showProfileMenu);
+                }}
+                className="flex items-center gap-2 px-2 py-1.5 rounded-xl transition-all duration-200"
+                style={{
+                  background: showProfileMenu
+                    ? 'rgba(232,25,44,0.1)'
+                    : '#162030',
+                  border: showProfileMenu
+                    ? '1px solid rgba(232,25,44,0.25)'
+                    : '1px solid #1e2d3d',
+                }}
+              >
+                {/* Avatar */}
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs text-white shrink-0"
+                  style={{
+                    background: 'linear-gradient(135deg, #E8192C, #ff4d5e)',
+                  }}
+                >
+                  {user?.name?.charAt(0) || 'A'}
+                </div>
+
+                {/* Name (hidden on mobile) */}
+                <div className="hidden md:block text-left">
+                  <div className="text-white text-xs font-bold leading-tight truncate max-w-[100px]">
+                    {user?.name || 'Admin'}
+                  </div>
+                  <div
+                    className="text-xs leading-tight flex items-center gap-1"
+                    style={{ color: '#E8192C' }}
+                  >
+                    <Shield size={8} />
+                    Admin
+                  </div>
+                </div>
+
+                <ChevronRight
+                  size={14}
+                  style={{
+                    color: '#6b7280',
+                    transform: showProfileMenu
+                      ? 'rotate(90deg)'
+                      : 'rotate(0deg)',
+                    transition: 'transform 0.2s',
+                  }}
+                />
+              </button>
+
+              {/* ── Profile Dropdown ── */}
+              {showProfileMenu && (
+                <div
+                  className="absolute right-0 top-full mt-2 w-64 rounded-xl shadow-2xl overflow-hidden z-50"
+                  style={{
+                    background: '#0f1520',
+                    border: '1px solid #1e2d3d',
+                    boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Profile Header */}
+                  <div
+                    className="p-4"
+                    style={{ borderBottom: '1px solid #1e2d3d' }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className="w-12 h-12 rounded-full flex items-center justify-center font-black text-lg text-white shrink-0"
+                        style={{
+                          background:
+                            'linear-gradient(135deg, #E8192C, #ff4d5e)',
+                          boxShadow: '0 4px 12px rgba(232,25,44,0.3)',
+                        }}
+                      >
+                        {user?.name?.charAt(0) || 'A'}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-white font-bold text-sm truncate">
+                          {user?.name || 'Admin'}
+                        </div>
+                        <div className="text-xs truncate" style={{ color: '#6b7280' }}>
+                          {user?.email || user?.username || 'admin'}
+                        </div>
+                        <div
+                          className="flex items-center gap-1 mt-1 text-xs font-semibold"
+                          style={{ color: '#E8192C' }}
+                        >
+                          <Shield size={10} />
+                          Administrator
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Menu Items */}
+                  <div className="p-2">
+                    <Link
+                      href="/admin/dashboard"
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all"
+                      style={{ color: '#9ca3af' }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#162030';
+                        e.currentTarget.style.color = '#ffffff';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'transparent';
+                        e.currentTarget.style.color = '#9ca3af';
+                      }}
+                    >
+                      <LayoutDashboard size={16} />
+                      Dashboard
+                    </Link>
+
+                    <Link
+                      href="/admin/settings"
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all"
+                      style={{ color: '#9ca3af' }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#162030';
+                        e.currentTarget.style.color = '#ffffff';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'transparent';
+                        e.currentTarget.style.color = '#9ca3af';
+                      }}
+                    >
+                      <Settings size={16} />
+                      Settings
+                    </Link>
+
+                    <Link
+                      href="/"
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all"
+                      style={{ color: '#9ca3af' }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#162030';
+                        e.currentTarget.style.color = '#ffffff';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'transparent';
+                        e.currentTarget.style.color = '#9ca3af';
+                      }}
+                    >
+                      <User size={16} />
+                      View Website
+                    </Link>
+                  </div>
+
+                  {/* Logout */}
+                  <div className="p-2" style={{ borderTop: '1px solid #1e2d3d' }}>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all"
+                      style={{ color: '#9ca3af' }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(232,25,44,0.08)';
+                        e.currentTarget.style.color = '#E8192C';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'transparent';
+                        e.currentTarget.style.color = '#9ca3af';
+                      }}
+                    >
+                      <LogOut size={16} />
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </header>
 
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-6">
-          {children}
-        </main>
+        <main className="flex-1 overflow-y-auto p-4 md:p-6">{children}</main>
       </div>
     </div>
   );

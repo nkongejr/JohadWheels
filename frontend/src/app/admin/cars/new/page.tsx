@@ -9,7 +9,49 @@ import { carsApi } from '@/lib/api';
 import toast from 'react-hot-toast';
 
 const BRANDS = ['BMW', 'Mercedes-Benz', 'Audi', 'Porsche', 'Range Rover', 'Lexus', 'Toyota', 'Volkswagen', 'Jaguar', 'Bentley', 'Ferrari', 'Lamborghini', 'Rolls-Royce', 'Maserati', 'Aston Martin'];
-const TYPES = ['Sedan', 'SUV', 'Coupe', 'Convertible', 'Hatchback', 'Truck', 'Van', 'Sports'];
+const TYPES = [
+  'Sedan',
+  'Hatchback',
+  'Station Wagon (Estate)',
+  'SUV (Sport Utility Vehicle)',
+  'Crossover',
+  'Coupe',
+  'Convertible',
+  'Roadster',
+  'Limousine',
+  'Pickup Truck',
+  'Double Cab Pickup',
+  'Single Cab Pickup',
+  'Minivan (MPV)',
+  'Microvan',
+  'Panel Van',
+  'Cargo Van',
+  'Box Van / Box Truck',
+  'Lorry (Light Duty Truck)',
+  'Heavy Truck / Trailer Truck',
+  'Bus',
+  'Minibus',
+  'Coach Bus',
+  'Camper Van / Motorhome',
+  'Off-road Vehicle',
+  '4x4 Utility Vehicle',
+  'Military Utility Vehicle',
+  'Sports Car',
+  'Supercar',
+  'Hypercar',
+  'Kei Car',
+  'Microcar',
+  'City Car / Subcompact Car',
+  'Fastback',
+  'Liftback',
+  'Notchback',
+  'Shooting Brake',
+  'Targa Top',
+  'Hardtop Coupe',
+  'Soft-top Convertible',
+  'Crew Cab Pickup',
+  'Extended Cab Pickup'
+];
 const FUELS = ['Petrol', 'Diesel', 'Hybrid', 'Electric'];
 const TRANSMISSIONS = ['Automatic', 'Manual', 'Semi-Automatic'];
 const CONDITIONS = ['New', 'Used', 'Certified Pre-Owned'];
