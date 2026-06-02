@@ -100,17 +100,17 @@ At JOHAD WHEELS, we believe buying a car should be an exciting and confident exp
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                icon: '🎯',
+                // icon: '🎯',
                 title: 'Our Mission',
-                desc: 'To make luxury car ownership accessible to every discerning Kenyan buyer through transparency, fairness, and exceptional service.',
+                desc: 'To provide quality, verified vehicles at fair prices while delivering exceptional customer service, transparency, and a stress-free car-buying experience',
               },
               {
-                icon: '👁️',
+                // icon: '👁️',
                 title: 'Our Vision',
-                desc: "To be East Africa's most trusted luxury vehicle dealer, known for quality, integrity, and customer satisfaction.",
+                desc: "To be Kenya’s most trusted and reliable automotive partner, making quality vehicle ownership accessible to everyone.",
               },
               {
-                icon: '💎',
+                // icon: '💎',
                 title: 'Our Values',
                 desc: 'Integrity, excellence, and customer-first approach in everything we do. Every client deserves the best experience.',
               },
@@ -120,7 +120,7 @@ At JOHAD WHEELS, we believe buying a car should be an exciting and confident exp
                 className="p-7 rounded-xl border border-gray-800 hover:border-yellow-500/40 transition-colors text-center"
                 style={{ background: '#111111' }}
               >
-                <div className="text-5xl mb-5">{item.icon}</div>
+                {/* <div className="text-5xl mb-5">{item.icon}</div> */}
                 <h3 className="font-bold text-white text-xl mb-3">{item.title}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
               </div>
