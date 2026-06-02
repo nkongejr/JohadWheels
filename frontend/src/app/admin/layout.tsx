@@ -117,34 +117,34 @@ export default function AdminLayout({
           </button>
         </div>
 
-        {/* Admin badge */}
-        <div className="px-4 py-3">
-          <div
-            className="flex items-center gap-3 p-3 rounded-xl"
-            style={{
-              background: 'rgba(232,25,44,0.08)',
-              border: '1px solid rgba(232,25,44,0.15)',
-            }}
-          >
-            <div
-              className="w-9 h-9 rounded-full flex items-center justify-center font-black text-sm text-white shrink-0"
-              style={{
-                background: 'linear-gradient(135deg, #E8192C, #ff4d5e)',
-              }}
-            >
-              {user?.name?.charAt(0) || 'A'}
-            </div>
-            <div className="overflow-hidden">
-              <div className="text-white text-sm font-bold truncate">
-                {user?.name || 'Admin'}
-              </div>
-              <div className="flex items-center gap-1 text-xs" style={{ color: '#E8192C' }}>
-                <Shield size={10} />
-                Administrator
-              </div>
-            </div>
-          </div>
-        </div>
+ {/* Admin badge */}
+<div className="px-4 py-3">
+  <div
+    className="flex items-center gap-3 p-3 rounded-xl"
+    style={{
+      background: 'rgba(232,25,44,0.08)',
+      border: '1px solid rgba(232,25,44,0.15)',
+    }}
+  >
+    <div
+      className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
+      style={{
+        background: 'linear-gradient(135deg, #E8192C, #ff4d5e)',
+      }}
+    >
+      <User size={18} className="text-white" />
+    </div>
+    <div className="overflow-hidden">
+      <div className="text-white text-sm font-bold truncate">
+        {user?.name || 'Admin'}
+      </div>
+      <div className="flex items-center gap-1 text-xs" style={{ color: '#E8192C' }}>
+        <Shield size={10} />
+        Administrator
+      </div>
+    </div>
+  </div>
+</div>
 
         {/* Nav */}
         <nav className="flex-1 px-3 py-2 space-y-1 overflow-y-auto">
