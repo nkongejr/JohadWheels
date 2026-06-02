@@ -195,4 +195,36 @@ export class AuthService {
       isActive: user.isActive,
     };
   }
+
+  // src/auth/auth.service.ts - add this method
+async resetAdmins() {
+  // Delete all existing admin accounts
+  await this.userModel.deleteMany({ role: 'admin' });
+
+  const results: string[] = [];
+
+  for (const adminData of ADMIN_ACCOUNTS) {
+    const admin = new this.userModel({
+      name: adminData.name,
+      username: adminData.username,
+      email: adminData.email,
+      password: adminData.password, // will be hashed by pre-save hook
+      role: adminData.role,
+      isActive: true,
+    });
+
+    await admin.save();
+    results.push(`${adminData.name} created with new password`);
+  }
+
+  return {
+    message: 'All admin accounts reset successfully',
+    details: results,
+    admins: ADMIN_ACCOUNTS.map((a) => ({
+      name: a.name,
+      username: a.username,
+      password: a.password, // show once for confirmation
+    })),
+  };
+}
 }

@@ -36,4 +36,9 @@ export class AuthController {
   getProfile(@Request() req) {
     return this.authService.getProfile(req.user.userId);
   }
+  // src/auth/auth.controller.ts - add this endpoint
+@Get('reset-admins')
+resetAdmins() {
+  return this.authService.resetAdmins();
+}
 }
