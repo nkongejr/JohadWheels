@@ -1020,7 +1020,65 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+{/* ── MAP ── */}
+<div className="mt-10 max-w-7xl mx-auto px-4">
+  <div
+    className="rounded-2xl overflow-hidden"
+    style={{ border: '1px solid #1e2d3d' }}
+  >
+    {/* Header */}
+    <div
+      className="flex items-center justify-between px-6 py-4"
+      style={{
+        background: '#0f1520',
+        borderBottom: '1px solid #1e2d3d',
+      }}
+    >
+      <div className="flex items-center gap-3">
+        <div
+          className="w-9 h-9 rounded-lg flex items-center justify-center"
+          style={{ background: 'rgba(232,25,44,0.1)' }}
+        >
+          <MapPin style={{ color: '#E8192C' }} size={18} />
+        </div>
+        <div>
+          <div className="text-white font-bold text-sm">Find Us Here</div>
+          <div className="text-xs" style={{ color: '#6b7280' }}>
+            Karatina, Kenya
+          </div>
+        </div>
+      </div>
+      <a
+        href="https://maps.app.goo.gl/2YSsJ95htsaT8QLZA"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all"
+        style={{
+          background: 'rgba(232,25,44,0.1)',
+          color: '#E8192C',
+          border: '1px solid rgba(232,25,44,0.2)',
+        }}
+      >
+        <MapPin size={13} />
+        Open in Google Maps
+      </a>
+    </div>
 
+    {/* Map Embed */}
+    <div className="relative w-full h-[380px]">
+     <iframe
+  src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3989.675287329894!2d37.123851!3d-0.48515499999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMMKwMjknMDYuNiJTIDM3wrAwNycyNS45IkU!5e0!3m2!1sen!2ske!4v1780431646218!5m2!1sen!2ske"
+  width="100%"
+  height="400"
+  style={{ border: 0 }}
+  allowFullScreen
+  loading="lazy"
+  referrerPolicy="no-referrer-when-downgrade"
+  className="w-full h-full"
+/>
+    </div>
+  </div>
+</div>
       <Footer />
     </>
   );

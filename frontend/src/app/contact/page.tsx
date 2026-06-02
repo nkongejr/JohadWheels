@@ -22,7 +22,7 @@ export default function ContactPage() {
     setLoading(true);
     try {
       await contactApi.send(form);
-      toast.success('Message sent successfully! We\'ll be in touch soon.');
+      toast.success("Message sent successfully! We'll be in touch soon.");
       setForm({ name: '', email: '', phone: '', subject: '', message: '' });
     } catch {
       toast.error('Failed to send. Please try again.');
@@ -64,7 +64,9 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="text-gray-400 text-sm mb-1.5 block">Your Name *</label>
+                    <label className="text-gray-400 text-sm mb-1.5 block">
+                      Your Name *
+                    </label>
                     <input
                       type="text"
                       value={form.name}
@@ -75,11 +77,15 @@ export default function ContactPage() {
                     />
                   </div>
                   <div>
-                    <label className="text-gray-400 text-sm mb-1.5 block">Your Email *</label>
+                    <label className="text-gray-400 text-sm mb-1.5 block">
+                      Your Email *
+                    </label>
                     <input
                       type="email"
                       value={form.email}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      onChange={(e) =>
+                        setForm({ ...form, email: e.target.value })
+                      }
                       placeholder="Your Email"
                       required
                       className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500 text-sm"
@@ -87,20 +93,28 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <div>
-                  <label className="text-gray-400 text-sm mb-1.5 block">Your Phone</label>
+                  <label className="text-gray-400 text-sm mb-1.5 block">
+                    Your Phone
+                  </label>
                   <input
                     type="tel"
                     value={form.phone}
-                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    onChange={(e) =>
+                      setForm({ ...form, phone: e.target.value })
+                    }
                     placeholder="Your Phone"
                     className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500 text-sm"
                   />
                 </div>
                 <div>
-                  <label className="text-gray-400 text-sm mb-1.5 block">Select Subject</label>
+                  <label className="text-gray-400 text-sm mb-1.5 block">
+                    Select Subject
+                  </label>
                   <select
                     value={form.subject}
-                    onChange={(e) => setForm({ ...form, subject: e.target.value })}
+                    onChange={(e) =>
+                      setForm({ ...form, subject: e.target.value })
+                    }
                     className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-500 text-sm"
                   >
                     <option value="">Select Subject</option>
@@ -112,10 +126,14 @@ export default function ContactPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-gray-400 text-sm mb-1.5 block">Your Message *</label>
+                  <label className="text-gray-400 text-sm mb-1.5 block">
+                    Your Message *
+                  </label>
                   <textarea
                     value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    onChange={(e) =>
+                      setForm({ ...form, message: e.target.value })
+                    }
                     placeholder="Your Message"
                     required
                     rows={5}
@@ -134,7 +152,6 @@ export default function ContactPage() {
 
             {/* Contact Info */}
             <div className="space-y-5">
-              {/* Info Cards */}
               {[
                 {
                   icon: <MapPin className="text-yellow-400" size={22} />,
@@ -171,7 +188,7 @@ export default function ContactPage() {
                     <div className="font-bold text-white">{item.title}</div>
                   </div>
                   <div className="pl-13 space-y-1">
-                    {item.content.map((c, j) => (
+                    {item.content.map((c, j) =>
                       item.links ? (
                         <a
                           key={j}
@@ -181,9 +198,11 @@ export default function ContactPage() {
                           {c}
                         </a>
                       ) : (
-                        <p key={j} className="text-gray-400 text-sm">{c}</p>
-                      )
-                    ))}
+                        <p key={j} className="text-gray-400 text-sm">
+                          {c}
+                        </p>
+                      ),
+                    )}
                   </div>
                 </div>
               ))}
@@ -203,7 +222,9 @@ export default function ContactPage() {
                   >
                     <MessageCircle size={18} className="text-green-400" />
                     <div>
-                      <div className="text-green-400 text-sm font-medium">WhatsApp</div>
+                      <div className="text-green-400 text-sm font-medium">
+                        WhatsApp
+                      </div>
                       <div className="text-gray-500 text-xs">Chat with us</div>
                     </div>
                   </a>
@@ -215,8 +236,12 @@ export default function ContactPage() {
                   >
                     <Facebook size={18} className="text-blue-400" />
                     <div>
-                      <div className="text-blue-400 text-sm font-medium">Facebook</div>
-                      <div className="text-gray-500 text-xs">Visit our Facebook page</div>
+                      <div className="text-blue-400 text-sm font-medium">
+                        Facebook
+                      </div>
+                      <div className="text-gray-500 text-xs">
+                        Visit our Facebook page
+                      </div>
                     </div>
                   </a>
                   <a
@@ -225,12 +250,101 @@ export default function ContactPage() {
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 p-3 rounded-lg bg-pink-600/10 border border-pink-600/20 hover:bg-pink-600/20 transition-colors"
                   >
-                    <span className="text-pink-400 text-lg w-[18px] text-center">📱</span>
+                    <span className="text-pink-400 text-lg w-[18px] text-center">
+                      📱
+                    </span>
                     <div>
-                      <div className="text-pink-400 text-sm font-medium">TikTok</div>
-                      <div className="text-gray-500 text-xs">Follow us on TikTok</div>
+                      <div className="text-pink-400 text-sm font-medium">
+                        TikTok
+                      </div>
+                      <div className="text-gray-500 text-xs">
+                        Follow us on TikTok
+                      </div>
                     </div>
                   </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── MAP SECTION ── */}
+          <div className="mt-10">
+            <div
+              className="rounded-2xl overflow-hidden border border-gray-800"
+              style={{ background: '#111111' }}
+            >
+              {/* Map Header */}
+              <div
+                className="flex items-center justify-between px-6 py-4 border-b border-gray-800"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-lg bg-yellow-500/10 flex items-center justify-center">
+                    <MapPin className="text-yellow-400" size={18} />
+                  </div>
+                  <div>
+                    <div className="text-white font-bold text-sm">
+                      Our Location
+                    </div>
+                    <div className="text-gray-500 text-xs">
+                      Karatina, Kenya
+                    </div>
+                  </div>
+                </div>
+                <a
+                  href="https://maps.app.goo.gl/2YSsJ95htsaT8QLZA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all"
+                  style={{
+                    background: 'rgba(234,179,8,0.1)',
+                    color: '#eab308',
+                    border: '1px solid rgba(234,179,8,0.2)',
+                  }}
+                >
+                  <MapPin size={14} />
+                  Open in Google Maps
+                </a>
+              </div>
+
+              {/* Google Maps Embed */}
+              <div className="relative w-full h-[400px]">
+             <iframe
+  src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3989.675287329894!2d37.123851!3d-0.48515499999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMMKwMjknMDYuNiJTIDM3wrAwNycyNS45IkU!5e0!3m2!1sen!2ske!4v1780431646218!5m2!1sen!2ske"
+  width="100%"
+  height="400"
+  style={{ border: 0 }}
+  allowFullScreen
+  loading="lazy"
+  referrerPolicy="no-referrer-when-downgrade"
+  className="w-full h-full"
+/>
+              </div>
+
+              {/* Map Footer */}
+              <div
+                className="px-6 py-4 flex flex-wrap items-center justify-between gap-3"
+                style={{ borderTop: '1px solid #1a1a1a' }}
+              >
+                <div className="flex flex-wrap gap-4">
+                  <a
+                    href="https://wa.me/254716296585?text=Hi, I need directions to JOHAD WHEELS"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-green-400 hover:text-green-300 transition-colors"
+                  >
+                    <MessageCircle size={15} />
+                    Get Directions via WhatsApp
+                  </a>
+                  <a
+                    href="tel:0716296585"
+                    className="flex items-center gap-2 text-sm text-yellow-400 hover:text-yellow-300 transition-colors"
+                  >
+                    <Phone size={15} />
+                    Call for Directions
+                  </a>
+                </div>
+                <div className="text-gray-600 text-xs">
+                  📍 Karatina Town, Nyeri County, Kenya
                 </div>
               </div>
             </div>
