@@ -273,14 +273,15 @@ export default function AdminLayout({
                 }}
               >
                 {/* Avatar */}
-                <div
-                  className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs text-white shrink-0"
-                  style={{
-                    background: 'linear-gradient(135deg, #E8192C, #ff4d5e)',
-                  }}
-                >
-                  {user?.name?.charAt(0) || 'A'}
-                </div>
+               {/* Top bar avatar */}
+<div
+  className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+  style={{
+    background: 'linear-gradient(135deg, #E8192C, #ff4d5e)',
+  }}
+>
+  <User size={16} className="text-white" />
+</div>
 
                 {/* Name (hidden on mobile) */}
                 <div className="hidden md:block text-left">
@@ -325,16 +326,16 @@ export default function AdminLayout({
                     style={{ borderBottom: '1px solid #1e2d3d' }}
                   >
                     <div className="flex items-center gap-3">
-                      <div
-                        className="w-12 h-12 rounded-full flex items-center justify-center font-black text-lg text-white shrink-0"
-                        style={{
-                          background:
-                            'linear-gradient(135deg, #E8192C, #ff4d5e)',
-                          boxShadow: '0 4px 12px rgba(232,25,44,0.3)',
-                        }}
-                      >
-                        {user?.name?.charAt(0) || 'A'}
-                      </div>
+                      {/* Dropdown avatar */}
+<div
+  className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
+  style={{
+    background: 'linear-gradient(135deg, #E8192C, #ff4d5e)',
+    boxShadow: '0 4px 12px rgba(232,25,44,0.3)',
+  }}
+>
+  <User size={22} className="text-white" />
+</div>
                       <div className="min-w-0">
                         <div className="text-white font-bold text-sm truncate">
                           {user?.name || 'Admin'}
