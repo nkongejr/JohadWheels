@@ -880,13 +880,13 @@ export default function HomePage() {
                     <div>
                       <div className="text-white font-medium text-sm mb-1">Phone</div>
                       <a href="tel:0797250555" className="text-gray-400 text-sm hover:text-red-400 block transition-colors">
-                        0797 250 555
+                       0716 296 585
                       </a>
                       <a href="tel:0721424515" className="text-gray-400 text-sm hover:text-red-400 block transition-colors">
-                        0721 424 515
+                       0797 230 565
                       </a>
                       <a href="tel:0715295535" className="text-gray-400 text-sm hover:text-red-400 block transition-colors">
-                        0715 295 535
+                       0791 424 616 
                       </a>
                     </div>
                   </div>
@@ -921,7 +921,7 @@ export default function HomePage() {
                 </h3>
                 <div className="space-y-3">
                   <a
-                    href="https://wa.me/254797250555"
+                    href="https://wa.me/254797946004"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 p-3 rounded-lg transition-colors"
