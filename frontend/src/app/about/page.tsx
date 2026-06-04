@@ -3,6 +3,16 @@ import Footer from '@/components/Footer';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Shield, Star, Users, Award, MapPin, Phone, Mail } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'About Us | Kenya\'s Premier Luxury Car Dealer',
+  description:
+    'Learn about JOHAD WHEELS - Kenya\'s trusted luxury car dealer since 2022. Located in Karatina, serving clients across Kenya.',
+  alternates: {
+    canonical: 'https://johadwheels.co.ke/about',
+  },
+};
 
 export default function AboutPage() {
   const team = [

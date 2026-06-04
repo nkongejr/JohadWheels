@@ -23,6 +23,16 @@ import WhyChooseUs from '@/components/WhyChooseUs';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import { carsApi, contactApi, newsletterApi, testimonialsApi } from '@/lib/api';
 import toast from 'react-hot-toast';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Premium Cars for Sale in Kenya | JOHAD WHEELS',
+  description:
+    'Browse Kenya\'s finest luxury vehicles. BMW, Mercedes-Benz, Range Rover, Porsche & more. Fair prices, verified vehicles. Based in Karatina, Kenya.',
+  alternates: {
+    canonical: 'https://johadwheels.co.ke',
+  },
+};
 
 export default function HomePage() {
   const router = useRouter();

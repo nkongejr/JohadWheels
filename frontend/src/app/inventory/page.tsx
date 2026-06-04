@@ -8,6 +8,16 @@ import CarCard from '@/components/CarCard';
 import { carsApi } from '@/lib/api';
 import { Search, SlidersHorizontal, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Car Inventory | Browse All Vehicles',
+  description:
+    'Browse our complete inventory of premium and luxury vehicles in Kenya. Filter by brand, price, year and more. New and used cars available.',
+  alternates: {
+    canonical: 'https://johadwheels.co.ke/inventory',
+  },
+};
 function InventoryContent() {
   const searchParams = useSearchParams();
   const [cars, setCars] = useState<any[]>([]);
