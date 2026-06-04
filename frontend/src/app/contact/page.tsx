@@ -167,8 +167,8 @@ export default function ContactPage() {
                 {
                   icon: <Mail className="text-yellow-400" size={22} />,
                   title: 'Email',
-                  content: ['Johadwheels.co.ke'],
-                  links: ['mailto:Johadwheels.co.ke'],
+                  content: ['Johadwheels@gmail.com'],
+                  links: ['mailto:Johadwheels@gmail.com'],
                 },
                 {
                   icon: <Clock className="text-yellow-400" size={22} />,

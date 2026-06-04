@@ -904,7 +904,7 @@ export default function HomePage() {
                         href="mailto:Johadwheels.co.ke"
                         className="text-gray-400 text-sm hover:text-red-400 transition-colors"
                       >
-                        Johadwheels.co.ke
+                       Johadwheels@gmail.com
                       </a>
                     </div>
                   </div>

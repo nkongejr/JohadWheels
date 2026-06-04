@@ -232,7 +232,7 @@ export default function Footer() {
                   <Mail size={14} style={{ color: '#E8192C' }} />
                 </div>
                 <a
-                  href="mailto:Johadwheels.co.ke"
+                  href="mailto:Johadwheels@gmail.com"
                   className="text-gray-400 text-sm pt-1.5 transition-colors duration-200"
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.color = '#E8192C')
@@ -241,7 +241,7 @@ export default function Footer() {
                     (e.currentTarget.style.color = '#9ca3af')
                   }
                 >
-                 Johadwheels.co.ke
+               Johadwheels@gmail.com
                 </a>
               </li>
             </ul>
