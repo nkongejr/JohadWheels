@@ -7,15 +7,13 @@ import StructuredData from '@/components/StructuredData';
 
 const inter = Inter({ subsets: ['latin'] });
 
-
 export const metadata: Metadata = {
-  // ── Basic ──────────────────────────────────────────────────
   title: {
     default: 'JOHAD WHEELS | Premium Cars in Kenya',
     template: '%s | JOHAD WHEELS',
   },
   description:
-    'Kenya\'s premier car dealer. Browse premium BMW, Mercedes-Benz, Range Rover, Porsche & more. Located in Karatina, Kenya. Call 0797 250 555.',
+    "Kenya's premier car dealer. Browse premium BMW, Mercedes-Benz, Range Rover, Porsche & more. Located in Karatina, Kenya. Call 0797 250 555.",
   keywords: [
     'luxury cars Kenya',
     'premium cars Karatina',
@@ -38,14 +36,8 @@ export const metadata: Metadata = {
   authors: [{ name: 'JOHAD WHEELS', url: 'https://johadwheels.co.ke' }],
   creator: 'JOHAD WHEELS',
   publisher: 'JOHAD WHEELS',
-
-  // ── Canonical URL ──────────────────────────────────────────
   metadataBase: new URL('https://johadwheels.co.ke'),
-  alternates: {
-    canonical: '/',
-  },
-
-  // ── Open Graph (Facebook, WhatsApp preview) ────────────────
+  alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     locale: 'en_KE',
@@ -53,35 +45,29 @@ export const metadata: Metadata = {
     siteName: 'JOHAD WHEELS',
     title: 'JOHAD WHEELS | Premium Cars in Kenya',
     description:
-      'Kenya\'s premier car dealer. Browse premium BMW, Mercedes-Benz, Range Rover, Porsche & more. Located in Karatina, Kenya.',
+      "Kenya's premier car dealer. Browse premium BMW, Mercedes-Benz, Range Rover, Porsche & more. Located in Karatina, Kenya.",
     images: [
       {
-        url: '/logo.jpeg', // add this image to /public
+        url: '/logo.jpeg',
         width: 1200,
         height: 630,
         alt: 'JOHAD WHEELS - Premium Cars Kenya',
       },
     ],
   },
-
-  // ── Twitter Card ───────────────────────────────────────────
   twitter: {
     card: 'summary_large_image',
     title: 'JOHAD WHEELS | Premium Cars in Kenya',
     description:
-      'Kenya\'s premier car dealer. Browse premium BMW, Mercedes-Benz, Range Rover, Porsche & more. Located in Karatina, Kenya.',
-    images: ['/logo.jpeg'], // add this image to /public
+      "Kenya's premier car dealer. Browse BMW, Mercedes, Range Rover & more.",
+    images: ['/logo.jpeg'],
     creator: '@johadwheels',
   },
-
-  // ── Icons ─────────────────────────────────────────────────
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
     apple: '/apple-touch-icon.png',
   },
-
-  // ── Robots ────────────────────────────────────────────────
   robots: {
     index: true,
     follow: true,
@@ -93,13 +79,10 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-
-  // ── Verification ────────────────────────────────────────
   verification: {
-    google: 'QwS_nN4kIZ0MlicEJSlc9XQl-mejBoxhQESeVQsG3y4', // ← ADD THIS
+    google: 'QwS_nN4kIZ0MlicEJSlc9XQl-mejBoxhQESeVQsG3y4',
   },
 };
-
 
 export default function RootLayout({
   children,
@@ -108,10 +91,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-       <head>
+      <head>
+        {/* ── Google Verification (explicit meta tag) ── */}
+        <meta
+          name="google-site-verification"
+          content="QwS_nN4kIZ0MlicEJSlc9XQl-mejBoxhQESeVQsG3y4"
+        />
         <StructuredData />
       </head>
-      <body>
+      <body className={inter.className}>
         <Toaster
           position="top-right"
           toastOptions={{
